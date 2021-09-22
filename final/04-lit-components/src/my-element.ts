@@ -1,55 +1,49 @@
 import { LitElement, html, customElement, property, css } from 'lit-element'
 
-/**
- * An example element.
- *
- * @slot - This element has a slot
- * @csspart button - The button
- */
 @customElement('my-element')
 export class MyElement extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      border: solid 1px gray;
-      padding: 16px;
-      max-width: 800px;
-    }
-  `
-
-  /**
-   * The name to say "Hello" to.
-   */
   @property()
-  name = 'World'
+  targetDate = '2021-09-24';
 
-  /**
-   * The number of times the button has been clicked.
-   */
-  @property({ type: Number })
-  count = 0
+  @property()
+  motive = 'vacaciones';
+
+  onDateChanged(event: any) {
+    this.targetDate = event.target.value;
+  }
+
+  onMotiveChanged(event: any) {
+    this.motive = event.target.value;
+  }
 
   render() {
+    const days = Math.round(((new Date(this.targetDate) as any) - (new Date() as any)) / (1000 * 60 * 60 * 24)) + 1;
+
+    const copies = days > 0 ? html`
+      <p>
+        ${days == 1 ? 'Falta' : 'Faltan'}
+        <span class=${days < 15 ? 'highlight' : ''}>${days}</span>
+        ${days == 1 ? 'día' : 'días'}
+        para que lleguen las ${this.motive}.
+      </p>
+    ` : days == 0 ? html`
+      <p class="highlight">
+        Hoy son mis ${this.motive} hi*#@#¢∞#ta!!!
+      </p>
+    ` : days < 0 ? html`
+      <p>
+        Ayer fueron mis ${this.motive} hi*#@#¢∞#ta.
+      </p>
+    ` : '';
+
     return html`
-      <h1>Hello, ${this.name}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
-      <slot></slot>
+      ${copies}
+      <p>
+        Mis
+        <input type="text" value=${this.motive} @keyup=${this.onMotiveChanged} />
+        empiezan en
+        <input type="date" value=${this.targetDate} @change=${this.onDateChanged} />
+      </p>
     `
-  }
-
-  private _onClick() {
-    this.count++
-  }
-
-  foo(): string {
-    return 'foo'
-  }
-}
-
-declare global {
-  interface HTMLElementTagNameMap {
-    'my-element': MyElement
   }
 }
