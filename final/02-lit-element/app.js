@@ -1,4 +1,4 @@
-import { html, render } from './vendor/lit-element.js';
+import { html, render } from './vendor/lit-html.js';
 
 const appNode = document.getElementById('app');
 
