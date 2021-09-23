@@ -4,15 +4,17 @@ import './pages/register';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
-  login = html`<credit-login></credit-login>`;
-  register = html`<register-login></register-login>`;
-
   @property()
   currentView: string = '/';
 
-  routes = {
-    '/' : this.login,
-    '/register' : this.register
+  connectedCallback() {
+    super.connectedCallback();
+
+    window.onpopstate = () => {
+      this._onNavigate(window.location.pathname);
+    }
+
+    this._onNavigate(window.location.pathname);
   }
 
   _renderCurrentView() {
