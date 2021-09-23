@@ -25,7 +25,6 @@ export class CreditApp extends LitElement {
   }
 
   _onNavigate(pathname: string): any {
-    console.log(pathname);
     window.history.pushState(
       {},
       pathname,
