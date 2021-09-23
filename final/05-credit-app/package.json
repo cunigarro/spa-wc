@@ -1,5 +1,5 @@
 {
-  "name": "todo-app",
+  "name": "credit-app",
   "version": "0.0.0",
   "main": "dist/my-element.es.js",
   "exports": {
