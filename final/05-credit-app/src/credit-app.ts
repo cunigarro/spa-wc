@@ -1,38 +1,55 @@
-import { LitElement, html, customElement, property, css } from 'lit-element'
+import { LitElement, html, customElement, property } from 'lit-element'
+import './pages/login';
+import './pages/register';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
-  static styles = css`
-    :host {
-      display: block;
-      border: solid 1px gray;
-      padding: 16px;
-      max-width: 800px;
-    }
-  `
+  login = html`<credit-login></credit-login>`;
+  register = html`<register-login></register-login>`;
 
   @property()
-  name = 'World'
+  currentView: string = '/';
 
-  @property({ type: Number })
-  count = 0
+  routes = {
+    '/' : this.login,
+    '/register' : this.register
+  }
+
+  _renderCurrentView() {
+    switch (this.currentView) {
+      case '/' : return html`<credit-login></credit-login>`;
+      case '/register' : return html`<credit-register></credit-register>`;
+    }
+  }
+
+  _onNavigate(pathname: string): any {
+    console.log(pathname);
+    window.history.pushState(
+      {},
+      pathname,
+      window.location.origin + pathname
+    );
+    this.currentView = pathname;
+  }
 
   render() {
     return html`
-      <h1>Hello, ${this.name}!</h1>
-      <button @click=${this._onClick} part="button">
-        Click Count: ${this.count}
-      </button>
-      <slot></slot>
+      <ul>
+        <li>
+          <button @click="${() => this._onNavigate('/')}">
+            Login
+          </button>
+        </li>
+        <li>
+          <button @click="${() => this._onNavigate('/register')}">
+            Register
+          </button>
+        </li>
+      </ul>
+      <div>
+        ${this._renderCurrentView()}
+      </div>
     `
-  }
-
-  private _onClick() {
-    this.count++
-  }
-
-  foo(): string {
-    return 'foo'
   }
 }
 
