@@ -1,8 +1,10 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import { directive } from 'lit-html';
+import './components/preloader';
+import { PendingContainer } from './helpers/pending-data';
 
 @customElement('credit-app')
-export class CreditApp extends LitElement {
+export class CreditApp extends PendingContainer(LitElement) {
   @property()
   currentView: string = '/';
 
@@ -22,6 +24,12 @@ export class CreditApp extends LitElement {
     return (part: any) => {
       if(!this.resolved.has(part)) {
         importPromise.then(() => this.resolved.add(part));
+        const event = new CustomEvent('pending-state', {
+          composed: true,
+          bubbles: true,
+          detail: { promise: importPromise }
+        });
+        part.starNode.parentNode!.dispatchEvent(event);
       }
       part.setValue(template);
     }
@@ -46,6 +54,7 @@ export class CreditApp extends LitElement {
 
   render() {
     return html`
+      <credit-preloader .show=${this.__hasPendingChildren}></credit-preloader>
       <ul>
         <li>
           <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}">
