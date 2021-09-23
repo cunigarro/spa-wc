@@ -36,14 +36,14 @@ export class CreditApp extends LitElement {
     return html`
       <ul>
         <li>
-          <button @click="${() => this._onNavigate('/')}">
+          <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}">
             Login
-          </button>
+          </a>
         </li>
         <li>
-          <button @click="${() => this._onNavigate('/register')}">
+          <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/register'); }}">
             Register
-          </button>
+          </a>
         </li>
       </ul>
       <div>
