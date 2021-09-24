@@ -3,16 +3,15 @@ import { LitElement, html, customElement, property } from 'lit-element'
 @customElement('applications-list')
 export class ApplicationsList extends LitElement {
   @property() applicationAPI;
-  @property() threads;
-  @property() _labels;
+  @property() _apps;
 
   async firstUpdated() {
-    this._labels = await this.applicationAPI();
+    this._apps = await this.applicationAPI();
   }
 
   render() {
-    return this._labels ? html`
-      ${this._labels.map(v => html`
+    return this._apps ? html`
+      ${this._apps.map(v => html`
         <div .id=${v.id} class="debtor-box">
           <ul>
             <li>

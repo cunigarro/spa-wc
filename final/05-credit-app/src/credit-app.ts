@@ -33,7 +33,10 @@ export class CreditApp extends Helpers(LitElement) {
     switch (this.currentView) {
       case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
       case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`
-        <applications-list .applicationAPI=${getApplicationsList}></applications-list>
+        <applications-list
+          .applicationAPI=${getApplicationsList}
+        >
+        </applications-list>
       `);
     }
   }
@@ -42,7 +45,7 @@ export class CreditApp extends Helpers(LitElement) {
     return html`
       <header>
         <div class="logo">
-          Credit app
+          Credits
         </div>
 
         <ul class="menu">
@@ -59,7 +62,6 @@ export class CreditApp extends Helpers(LitElement) {
         </ul>
       </header>
       <div class="container">
-        <credit-preloader .show=${this.__hasPendingChildren}></credit-preloader>
         ${this._renderCurrentView()}
       </div>
     `
