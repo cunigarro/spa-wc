@@ -7,7 +7,29 @@ export class DoApplications extends LitElement {
 
   render() {
     return html`
-      Hola soy credit login
+      <h1>
+        Credit form
+      </h1>
+
+      <form class="form">
+        <label>
+          Name
+          <input name="name" required />
+        </label>
+
+        <label>
+          Amount
+          <input amount="name" required />
+        </label>
+
+        <button type="submit">
+          Apply
+        </button>
+      </form>
     `
+  }
+
+  createRenderRoot() {
+    return this;
   }
 }

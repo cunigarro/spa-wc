@@ -45,3 +45,18 @@ header .menu li a {
   margin: 0 auto;
   padding: 1rem;
 }
+
+.container .form label {
+  display: block;
+  margin: 20px 0;
+}
+
+.container .form button {
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  background-color: #3f3d96;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+}
