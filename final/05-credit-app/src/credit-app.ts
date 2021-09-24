@@ -1,46 +1,22 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-import { directive } from 'lit-html';
-import './components/preloader';
-import { PendingContainer } from './helpers/pending-data';
+import { Helpers } from './helpers/helpers-container';
 
 @customElement('credit-app')
-export class CreditApp extends PendingContainer(LitElement) {
+export class CreditApp extends Helpers(LitElement) {
   @property()
   currentView: string = '/';
+  resolved = new WeakSet();
 
   connectedCallback() {
     super.connectedCallback();
+  }
 
+  _hearRouting() {
     window.onpopstate = () => {
       this._onNavigate(window.location.pathname);
     }
 
     this._onNavigate(window.location.pathname);
-  }
-
-  resolved = new WeakSet();
-
-  lazyLoad = directive((importPromise: any, template: any) => {
-    return (part: any) => {
-      if(!this.resolved.has(part)) {
-        importPromise.then(() => this.resolved.add(part));
-        const event = new CustomEvent('pending-state', {
-          composed: true,
-          bubbles: true,
-          detail: { promise: importPromise }
-        });
-        part.startNode.parentNode!.dispatchEvent(event);
-      }
-      part.setValue(template);
-    }
-  });
-
-  _renderCurrentView() {
-    console.log(this.currentView);
-    switch (this.currentView) {
-      case '/' : return this.lazyLoad(import('./pages/login'), html`<credit-login></credit-login>`);
-      case '/register' : return this.lazyLoad(import('./pages/register'), html`<credit-register></credit-register>`);
-    }
   }
 
   _onNavigate(pathname: string): any {
@@ -50,6 +26,13 @@ export class CreditApp extends PendingContainer(LitElement) {
       window.location.origin + pathname
     );
     this.currentView = pathname;
+  }
+
+  _renderCurrentView() {
+    switch (this.currentView) {
+      case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
+      case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`<applications-list></applications-list>`);
+    }
   }
 
   render() {
@@ -66,7 +49,7 @@ export class CreditApp extends PendingContainer(LitElement) {
             </a>
           </li>
           <li>
-            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/register'); }}">
+            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/applications'); }}">
               Applications list
             </a>
           </li>
@@ -79,6 +62,7 @@ export class CreditApp extends PendingContainer(LitElement) {
     `
   }
 
+  // Clean shadow dom
   createRenderRoot() {
     return this;
   }
