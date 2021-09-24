@@ -11,6 +11,12 @@ export class CreditApp extends Helpers(LitElement) {
   constructor() {
     super();
     this.requester.requestInstanceKey({ name: 'fweg' }, this);
+
+    this.creditDataEvent = new Event('credit-data');
+
+    this.addEventListener('credit-data', (data: any) => {
+      console.log(data.detail.userId);
+    });
   }
 
   connectedCallback() {

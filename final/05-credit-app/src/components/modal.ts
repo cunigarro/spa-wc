@@ -8,6 +8,17 @@ export class CreditModal extends LitElement {
   @property()
   show = false;
 
+  payCredit(userId: any) {
+    super.connectedCallback();
+    const event = new CustomEvent('credit-data', {
+      bubbles: true,
+      cancelable: true,
+      detail: { userId }
+    });
+
+    this.dispatchEvent(event);
+  }
+
   closeModal() {
     const event = new CustomEvent('close-modal', {
       detail: {
@@ -52,7 +63,10 @@ export class CreditModal extends LitElement {
               ))}
             </ul>
           </p>
-          <button class="credit-btn">
+          <button
+            @click=${() => this.payCredit(this.userData.id)}
+            class="credit-btn"
+          >
             Pagar
           </button>
         </div>

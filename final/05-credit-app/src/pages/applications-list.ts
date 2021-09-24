@@ -34,7 +34,7 @@ export class ApplicationsList extends Helpers(LitElement) {
             </li>
             <li>
               <strong>Detalle:</strong>
-              <button class="credit-btn" @click=${() => this.showDetail({ ...v.detail, name: v.name})}>
+              <button class="credit-btn" @click=${() => this.showDetail({ ...v.detail, name: v.name, id: v.id})}>
                 Ver detalle
               </button>
             </li>
