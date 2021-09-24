@@ -4,8 +4,8 @@ import { Helpers } from './helpers/helpers-container';
 
 @customElement('credit-app')
 export class CreditApp extends Helpers(LitElement) {
-  @property()
-  currentView: string = '/';
+  @property() currentView: string = '/';
+  @property() appsData: any = [];
   resolved = new WeakSet();
 
   constructor() {
@@ -16,6 +16,20 @@ export class CreditApp extends Helpers(LitElement) {
 
     this.addEventListener('credit-data', (data: any) => {
       console.log(data.detail.userId);
+      this.appsData = this.appsData.map((app: any) => {
+        if(app.id == data.detail.userId) {
+          return {
+            ...app,
+            payed: true
+          };
+        } else {
+          return app;
+        }
+      });
+    });
+
+    getApplicationsList().then(data => {
+      this.appsData = data;
     });
   }
 
@@ -44,7 +58,7 @@ export class CreditApp extends Helpers(LitElement) {
       case '/' : return this.lazyLoading.load(import('./pages/do-applications'), html`<do-applications></do-applications>`);
       case '/applications' : return this.lazyLoading.load(import('./pages/applications-list'), html`
         <applications-list
-          .applicationAPI=${getApplicationsList}
+          .applications=${this.appsData}
         >
         </applications-list>
       `);

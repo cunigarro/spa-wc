@@ -6,6 +6,7 @@ export default function getApplicationsList() {
         name: 'Cristiano Ronaldo',
         amount: 20000,
         state: 'Aprobado',
+        payed: false,
         detail: {
           payCapacity: 3000,
           amountToPay: 25000,
@@ -21,7 +22,8 @@ export default function getApplicationsList() {
         id: 2,
         name: 'Leonel Messi',
         amount: 100,
-        state: 'Pendiente',
+        state: 'Aprobado',
+        payed: false,
         detail: {
           payCapacity: 3000,
           amountToPay: 25000,
@@ -37,7 +39,8 @@ export default function getApplicationsList() {
         id: 3,
         name: 'Luis Díaz',
         amount: 2000,
-        state: 'Pendiente',
+        state: 'Aprobado',
+        payed: false,
         detail: {
           payCapacity: 3000,
           amountToPay: 25000,
@@ -53,7 +56,8 @@ export default function getApplicationsList() {
         id: 3,
         name: 'Usain Bolt',
         amount: 2000,
-        state: 'Rechazado',
+        state: 'Aprobado',
+        payed: false,
         detail: {
           payCapacity: 3000,
           amountToPay: 25000,

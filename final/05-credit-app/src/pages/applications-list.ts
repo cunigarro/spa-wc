@@ -4,14 +4,9 @@ import { Helpers } from './../helpers/helpers-container';
 
 @customElement('applications-list')
 export class ApplicationsList extends Helpers(LitElement) {
-  @property() applicationAPI;
-  @property() _apps;
+  @property() applications;
   @property() showDetailModal = false;
   @property() userData: any;
-
-  async firstUpdated() {
-    this._apps = await this.applicationAPI();
-  }
 
   showDetail(detail: any) {
     this.showDetailModal = true;
@@ -19,8 +14,8 @@ export class ApplicationsList extends Helpers(LitElement) {
   }
 
   render() {
-    return this._apps ? html`
-      ${this._apps.map(v => html`
+    return this.applications ? html`
+      ${this.applications.map((v: any) => html`
         <div .id=${v.id} class="debtor-box">
           <ul>
             <li>
@@ -31,6 +26,9 @@ export class ApplicationsList extends Helpers(LitElement) {
             </li>
             <li>
               <strong>Estado:</strong> ${v.state}
+            </li>
+            <li>
+              <strong>Pagado:</strong> ${v.payed ? 'Si' : 'No'}
             </li>
             <li>
               <strong>Detalle:</strong>
