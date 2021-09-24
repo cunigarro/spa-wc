@@ -5,25 +5,65 @@ export default function getApplicationsList() {
         id: 1,
         name: 'Cristiano Ronaldo',
         amount: 20000,
-        state: 'Aprobado'
+        state: 'Aprobado',
+        detail: {
+          payCapacity: 3000,
+          amountToPay: 25000,
+          paymentMethods: [
+            'Bancolombia',
+            'Davivienda',
+            'Nequi',
+            'BBVA'
+          ]
+        }
       },
       {
         id: 2,
         name: 'Leonel Messi',
         amount: 100,
-        state: 'Pendiente'
+        state: 'Pendiente',
+        detail: {
+          payCapacity: 3000,
+          amountToPay: 25000,
+          paymentMethods: [
+            'Bancolombia',
+            'Davivienda',
+            'Nequi',
+            'BBVA'
+          ]
+        }
       },
       {
         id: 3,
         name: 'Luis Díaz',
         amount: 2000,
-        state: 'Pendiente'
+        state: 'Pendiente',
+        detail: {
+          payCapacity: 3000,
+          amountToPay: 25000,
+          paymentMethods: [
+            'Bancolombia',
+            'Davivienda',
+            'Nequi',
+            'BBVA'
+          ]
+        }
       },
       {
         id: 3,
         name: 'Usain Bolt',
         amount: 2000,
-        state: 'Rechazado'
+        state: 'Rechazado',
+        detail: {
+          payCapacity: 3000,
+          amountToPay: 25000,
+          paymentMethods: [
+            'Bancolombia',
+            'Davivienda',
+            'Nequi',
+            'BBVA'
+          ]
+        }
       }
     ];
 

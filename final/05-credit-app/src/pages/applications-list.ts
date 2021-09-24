@@ -1,12 +1,20 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import './../components/modal';
 
 @customElement('applications-list')
 export class ApplicationsList extends LitElement {
   @property() applicationAPI;
   @property() _apps;
+  @property() showDetailModal = false;
+  @property() userData: any;
 
   async firstUpdated() {
     this._apps = await this.applicationAPI();
+  }
+
+  showDetail(detail: any) {
+    this.showDetailModal = true;
+    this.userData = detail;
   }
 
   render() {
@@ -23,9 +31,16 @@ export class ApplicationsList extends LitElement {
             <li>
               <strong>Estado:</strong> ${v.state}
             </li>
+            <li>
+              <strong>Detalle:</strong>
+              <button class="credit-btn" @click=${() => this.showDetail({ ...v.detail, name: v.name})}>
+                Ver detalle
+              </button>
+            </li>
           </ul>
         </div>
       `)}
+      <credit-modal .show=${this.showDetailModal} .userData=${this.userData} @close-modal=${() => { this.showDetailModal =  false; }}></credit-modal>
     `: `
       Loading...
     `
