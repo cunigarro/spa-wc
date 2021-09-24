@@ -1,4 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import getApplicationsList from './apis/applications-list';
 import { Helpers } from './helpers/helpers-container';
 
 @customElement('credit-app')
@@ -31,7 +32,9 @@ export class CreditApp extends Helpers(LitElement) {
   _renderCurrentView() {
     switch (this.currentView) {
       case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
-      case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`<applications-list></applications-list>`);
+      case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`
+        <applications-list .applicationAPI=${getApplicationsList}></applications-list>
+      `);
     }
   }
 
