@@ -8,16 +8,20 @@ export class CreditApp extends Helpers(LitElement) {
   currentView: string = '/';
   resolved = new WeakSet();
 
+  constructor() {
+    super();
+    this.requester.requestInstanceKey({ name: 'fweg' }, this);
+  }
+
   connectedCallback() {
     super.connectedCallback();
+    this._onNavigate(window.location.pathname);
   }
 
   _hearRouting() {
     window.onpopstate = () => {
       this._onNavigate(window.location.pathname);
     }
-
-    this._onNavigate(window.location.pathname);
   }
 
   _onNavigate(pathname: string): any {
@@ -44,7 +48,11 @@ export class CreditApp extends Helpers(LitElement) {
   render() {
     return html`
       <header>
-        <div class="logo">
+        <div
+          @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}"
+          class="logo"
+          type="button"
+        >
           Credits
         </div>
 

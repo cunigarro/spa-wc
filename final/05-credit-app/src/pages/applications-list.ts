@@ -1,8 +1,9 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import './../components/modal';
+import { Helpers } from './../helpers/helpers-container';
 
 @customElement('applications-list')
-export class ApplicationsList extends LitElement {
+export class ApplicationsList extends Helpers(LitElement) {
   @property() applicationAPI;
   @property() _apps;
   @property() showDetailModal = false;

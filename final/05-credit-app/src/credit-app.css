@@ -94,3 +94,7 @@ header .menu li a {
   font-size: 1rem;
   border: 0;
 }
+
+[type="button"] {
+  cursor: pointer;
+}

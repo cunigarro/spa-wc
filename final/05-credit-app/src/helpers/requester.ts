@@ -1,13 +1,11 @@
 export default class Requester {
-  requestInstanceKey(key) {
+  requestInstanceKey(data: any, _this: any) {
     const event = new CustomEvent('request-instance', {
-      detail: {key},
+      detail: data,
       bubbles: true,
       cancelable: true
     });
 
-    this.dispatchEvent(event);
-
-    return event.detail.instance;
+    _this.dispatchEvent(event);
   }
 }
