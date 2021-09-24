@@ -12,4 +12,8 @@ export default class Provider {
       });
     }
   }
+
+  provideInstance(key, instance) {
+    this._instances.set(key, instance);
+  }
 }
