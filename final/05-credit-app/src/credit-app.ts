@@ -54,28 +54,32 @@ export class CreditApp extends PendingContainer(LitElement) {
 
   render() {
     return html`
-      <credit-preloader .show=${this.__hasPendingChildren}></credit-preloader>
-      <ul>
-        <li>
-          <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}">
-            Login
-          </a>
-        </li>
-        <li>
-          <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/register'); }}">
-            Register
-          </a>
-        </li>
-      </ul>
-      <div>
+      <header>
+        <div class="logo">
+          Credit app
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}">
+              Do applications
+            </a>
+          </li>
+          <li>
+            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/register'); }}">
+              Applications list
+            </a>
+          </li>
+        </ul>
+      </header>
+      <div class="container">
+        <credit-preloader .show=${this.__hasPendingChildren}></credit-preloader>
         ${this._renderCurrentView()}
       </div>
     `
   }
-}
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'credit-app': CreditApp
+  createRenderRoot() {
+    return this;
   }
 }
