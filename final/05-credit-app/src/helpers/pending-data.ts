@@ -1,15 +1,13 @@
-import { property } from 'lit-element'
-
 export const PendingContainer = (base: any) => class extends base {
-  @property()
+  // @property()
   __hasPendingChildren = false;
 
-  @property()
+  // @property()
   __pendingCount = 0;
 
   constructor() {
     super();
-    this.addEventLister('pending-state', async (evt: Event) => {
+    this.addEventListener('pending-state', async (evt: any) => {
       this.__hasPendingChildren = true;
       this.__pendingCount++;
       await evt.detail.promise;

@@ -29,7 +29,7 @@ export class CreditApp extends PendingContainer(LitElement) {
           bubbles: true,
           detail: { promise: importPromise }
         });
-        part.starNode.parentNode!.dispatchEvent(event);
+        part.startNode.parentNode!.dispatchEvent(event);
       }
       part.setValue(template);
     }

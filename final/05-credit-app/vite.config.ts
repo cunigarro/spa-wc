@@ -5,7 +5,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: 'src/credit-app.ts',
-      formats: ['es']
+      formats: ['es'],
     },
     rollupOptions: {
       external: /^lit-element/
