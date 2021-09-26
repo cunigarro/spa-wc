@@ -1,12 +1,21 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-
+import { Helpers } from '../helpers';
 @customElement('credit-modal')
-export class CreditModal extends LitElement {
+export class CreditModal extends Helpers(LitElement) {
   @property()
   userData: any;
 
   @property()
   show = false;
+
+  @property()
+  userAPI;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.userAPI = this.requestInstance('user-api');
+    console.log(this.userAPI);
+  }
 
   payCredit(userId: any) {
     super.connectedCallback();
@@ -17,6 +26,8 @@ export class CreditModal extends LitElement {
     });
 
     this.dispatchEvent(event);
+
+    this.closeModal()
   }
 
   closeModal() {
@@ -27,6 +38,7 @@ export class CreditModal extends LitElement {
       bubbles: true,
       cancelable: true
     });
+
     this.dispatchEvent(event);
   }
 

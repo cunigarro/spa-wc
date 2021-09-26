@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import { Helpers } from '../helpers';
 import './../components/modal';
-import { Helpers } from './../helpers/helpers-container';
 
 @customElement('applications-list')
 export class ApplicationsList extends Helpers(LitElement) {

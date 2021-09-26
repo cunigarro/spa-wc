@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import getApplicationsList from './apis/applications-list';
-import { Helpers } from './helpers/helpers-container';
+import { Helpers } from './helpers';
 
 @customElement('credit-app')
 export class CreditApp extends Helpers(LitElement) {
@@ -10,7 +10,9 @@ export class CreditApp extends Helpers(LitElement) {
 
   constructor() {
     super();
-    this.requester.requestInstanceKey({ name: 'fweg' }, this);
+
+    this.listenerInstance();
+    this.provideInstance('user-api', getApplicationsList());
 
     this.creditDataEvent = new Event('credit-data');
 
@@ -55,8 +57,8 @@ export class CreditApp extends Helpers(LitElement) {
 
   _renderCurrentView() {
     switch (this.currentView) {
-      case '/' : return this.lazyLoading.load(import('./pages/do-applications'), html`<do-applications></do-applications>`);
-      case '/applications' : return this.lazyLoading.load(import('./pages/applications-list'), html`
+      case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
+      case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`
         <applications-list
           .applications=${this.appsData}
         >
