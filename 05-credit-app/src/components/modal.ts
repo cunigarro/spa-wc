@@ -1,7 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-import { Helpers } from '../helpers';
 @customElement('credit-modal')
-export class CreditModal extends Helpers(LitElement) {
+export class CreditModal extends LitElement {
   @property()
   userData: any;
 
