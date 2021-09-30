@@ -1,20 +1,26 @@
 import { LitElement, html, customElement, property } from 'lit-element'
 import getApplicationsList from './apis/applications-list';
-import { Helpers } from './helpers';
+import { directive } from 'lit-html';
 
 @customElement('credit-app')
-export class CreditApp extends Helpers(LitElement) {
+export class CreditApp extends LitElement {
   @property() currentView: string = '/';
   @property() appsData: any = [];
-  resolved = new WeakSet();
+  _resolved = new WeakSet();
+
+  lazyLoading = directive((importPromise: any, template: any) => {
+    return (part: any) => {
+      if(!this._resolved.has(part)) {
+        importPromise.then(() => this._resolved.add(part));
+      }
+      part.setValue(template);
+    }
+  });
 
   constructor() {
     super();
 
-    this.listenerInstance();
-    this.provideInstance('user-api', getApplicationsList());
-
-    this.creditDataEvent = new Event('credit-data');
+    new Event('credit-data');
 
     this.addEventListener('credit-data', (data: any) => {
       console.log(data.detail.userId);
@@ -57,7 +63,9 @@ export class CreditApp extends Helpers(LitElement) {
 
   _renderCurrentView() {
     switch (this.currentView) {
+
       case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
+
       case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`
         <applications-list
           .applications=${this.appsData}

@@ -1,9 +1,8 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-import { Helpers } from '../helpers';
 import './../components/modal';
 
 @customElement('applications-list')
-export class ApplicationsList extends Helpers(LitElement) {
+export class ApplicationsList extends LitElement {
   @property() applications;
   @property() showDetailModal = false;
   @property() userData: any;
@@ -14,7 +13,7 @@ export class ApplicationsList extends Helpers(LitElement) {
   }
 
   render() {
-    return this.applications ? html`
+    return this.applications.length ? html`
       ${this.applications.map((v: any) => html`
         <div .id=${v.id} class="debtor-box">
           <ul>

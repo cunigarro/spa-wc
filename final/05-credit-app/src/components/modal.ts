@@ -8,15 +8,6 @@ export class CreditModal extends Helpers(LitElement) {
   @property()
   show = false;
 
-  @property()
-  userAPI;
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.userAPI = this.requestInstance('user-api');
-    console.log(this.userAPI);
-  }
-
   payCredit(userId: any) {
     super.connectedCallback();
     const event = new CustomEvent('credit-data', {
