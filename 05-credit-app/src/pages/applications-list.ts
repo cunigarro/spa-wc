@@ -16,7 +16,7 @@ export class ApplicationsList extends LitElement {
     return this.applications.length ? html`
       ${this.applications.map((v: any) => html`
         <div .id=${v.id} class="debtor-box">
-          <ul>
+          <ul class="applications-list">
             <li>
               <strong>Nombre:</strong> ${v.name}
             </li>
@@ -24,10 +24,7 @@ export class ApplicationsList extends LitElement {
               <strong>Cantidad:</strong> ${v.amount}
             </li>
             <li>
-              <strong>Estado:</strong> ${v.state}
-            </li>
-            <li>
-              <strong>Pagado:</strong> ${v.payed ? 'Si' : 'No'}
+              <strong>Estado:</strong> <span class="${v.payed ? 'payed' : 'no-payed'}">${v.payed ? 'Pagado' : 'No pagado'}</span>
             </li>
             <li>
               <strong>Detalle:</strong>
