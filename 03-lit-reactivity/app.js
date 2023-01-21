@@ -23,7 +23,7 @@ function rerender({targetDate, motive}) {
       ${days == 1 ? 'Falta' : 'Faltan'}
       <span class=${days < 15 ? 'highlight' : ''}>${days}</span>
       ${days == 1 ? 'día' : 'días'}
-      para ${motive}.
+      para l@s ${motive}.
     </p>
   ` : days == 0 ? html`
     <p class="highlight">
@@ -31,7 +31,7 @@ function rerender({targetDate, motive}) {
     </p>
   ` : days < 0 ? html`
     <p>
-      Ayer fueron mis ${motive}, aaaah :(
+      ${days == -1 ? 'Ayer' : 'Hace ' + Math.abs(days) + ' días' } fueron mis ${motive}, aaaah :(
     </p>
   ` : '';
 
