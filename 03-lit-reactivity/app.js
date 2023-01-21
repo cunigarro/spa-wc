@@ -1,7 +1,7 @@
 import { html, render } from './vendor/lit-html.js';
 
 const state = {
-  targetDate: '2021-09-23',
+  targetDate: '2022-12-15',
   motive: 'vacaciones'
 }
 
@@ -23,26 +23,26 @@ function rerender({targetDate, motive}) {
       ${days == 1 ? 'Falta' : 'Faltan'}
       <span class=${days < 15 ? 'highlight' : ''}>${days}</span>
       ${days == 1 ? 'día' : 'días'}
-      para que lleguen las ${motive}.
+      para ${motive}.
     </p>
   ` : days == 0 ? html`
     <p class="highlight">
-      Hoy son mis ${motive} hi*#@#¢∞#ta!!!
+      Hoy son mis ${motive}, eeeeh :)
     </p>
   ` : days < 0 ? html`
     <p>
-      Ayer fueron mis ${motive} hi*#@#¢∞#ta.
+      Ayer fueron mis ${motive}, aaaah :(
     </p>
   ` : '';
 
   const template = html`
-    ${copy}
     <p>
       Mis
       <input type="text" value=${motive} @keyup=${onMotiveChanged} />
-      empiezan en
+      ${days > 0 ? 'serán el' : days < 0 ? 'fueron el' : 'son hoy!'}
       <input type="date" value=${targetDate} @change=${onDateChanged} />
     </p>
+    ${copy}
   `;
 
   render(template, document.getElementById('app'));
