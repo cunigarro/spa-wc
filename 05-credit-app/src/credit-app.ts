@@ -1,6 +1,7 @@
-import { LitElement, html, customElement, property } from 'lit-element'
+import { LitElement, html, customElement, property } from 'lit-element';
 import getApplicationsList from './apis/applications-list';
 import { directive } from 'lit-html';
+import './components/header';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
@@ -19,11 +20,14 @@ export class CreditApp extends LitElement {
 
   constructor() {
     super();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
 
     new Event('credit-data');
 
     this.addEventListener('credit-data', (data: any) => {
-      console.log(data.detail.userId);
       this.appsData = this.appsData.map((app: any) => {
         if(app.id == data.detail.userId) {
           return {
@@ -39,11 +43,10 @@ export class CreditApp extends LitElement {
     getApplicationsList().then(data => {
       this.appsData = data;
     });
-  }
 
-  connectedCallback() {
-    super.connectedCallback();
     this._onNavigate(window.location.pathname);
+
+    this._hearRouting();
   }
 
   _hearRouting() {
@@ -63,42 +66,26 @@ export class CreditApp extends LitElement {
 
   _renderCurrentView() {
     switch (this.currentView) {
+      case '/applications' :
+        return this.lazyLoading(import('./pages/applications-list'), html`
+          <applications-list
+            .applications=${this.appsData}
+          >
+          </applications-list>
+        `);
 
-      case '/' : return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
-
-      case '/applications' : return this.lazyLoading(import('./pages/applications-list'), html`
-        <applications-list
-          .applications=${this.appsData}
-        >
-        </applications-list>
-      `);
+      default:
+        return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
     }
   }
 
   render() {
     return html`
-      <header>
-        <div
-          @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}"
-          class="logo"
-          type="button"
-        >
-          Credits
-        </div>
+      <app-header
+        @navigate-to=${(data: any) => this._onNavigate(data.detail.route)}
+      >
+      </app-header>
 
-        <ul class="menu">
-          <li>
-            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/'); }}">
-              Do applications
-            </a>
-          </li>
-          <li>
-            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this._onNavigate('/applications'); }}">
-              Applications list
-            </a>
-          </li>
-        </ul>
-      </header>
       <div class="container">
         ${this._renderCurrentView()}
       </div>

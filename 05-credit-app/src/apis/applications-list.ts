@@ -54,7 +54,7 @@ export default function getApplicationsList() {
       },
       {
         id: 4,
-        name: 'Usain Bolt',
+        name: 'Pibe Valderrama',
         amount: 2000,
         state: 'Aprobado',
         payed: false,

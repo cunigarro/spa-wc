@@ -12,34 +12,6 @@ body {
   font-family: "Helvetica Neue", sans-serif;
 }
 
-header {
-  display: flex;
-  padding: 1rem;
-  background-color: #3f3d96;
-  color: #fff;
-  align-items: center;
-  justify-content: space-between;
-}
-
-header .logo {
-  font-weight: bold;
-}
-
-header .menu {
-  margin: 0;
-  padding: 1rem;
-}
-
-header .menu li {
-  display: inline-block;
-  padding: 0;
-  margin: 0 1rem;
-}
-
-header .menu li a {
-  color: #fff;
-}
-
 .container {
   max-width: 1200px;
   margin: 0 auto;
