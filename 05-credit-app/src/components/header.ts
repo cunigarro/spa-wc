@@ -14,6 +14,33 @@ export class Header extends LitElement {
     this.dispatchEvent(event);
   }
 
+  render() {
+    return html`
+      <header>
+        <div
+          @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/'); }}"
+          class="logo"
+          type="button"
+        >
+          Credits
+        </div>
+
+        <ul class="menu">
+          <li>
+            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/'); }}">
+              Do applications
+            </a>
+          </li>
+          <li>
+            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/applications'); }}">
+              Applications list
+            </a>
+          </li>
+        </ul>
+      </header>
+    `;
+  }
+
   static styles = css`
     header {
       display: flex;
@@ -43,31 +70,4 @@ export class Header extends LitElement {
       color: #fff;
     }
   `;
-
-  render() {
-    return html`
-      <header>
-        <div
-          @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/'); }}"
-          class="logo"
-          type="button"
-        >
-          Credits
-        </div>
-
-        <ul class="menu">
-          <li>
-            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/'); }}">
-              Do applications
-            </a>
-          </li>
-          <li>
-            <a href="#" @click="${(evt: any) => { evt.preventDefault(); this.navigateTo('/applications'); }}">
-              Applications list
-            </a>
-          </li>
-        </ul>
-      </header>
-    `;
-  }
 }
