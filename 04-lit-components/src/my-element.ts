@@ -2,6 +2,12 @@ import { LitElement, html, customElement, property, css } from 'lit-element'
 
 @customElement('my-element')
 export class MyElement extends LitElement {
+  @property()
+  name = 'Somebody';
+
+  @property()
+  hobby = '';
+
   static styles = css`
     :host {
       font-family: "Helvetica Neue", sans-serif;
@@ -63,6 +69,9 @@ export class MyElement extends LitElement {
     ` : '';
 
     return html`
+      <p>
+          Hola soy ${this.name} me gusta la/los ${this.hobby} y...
+      </p>
       <p>
         Mis
         <input type="text" value=${this.motive} @keyup=${this.onMotiveChanged} />
