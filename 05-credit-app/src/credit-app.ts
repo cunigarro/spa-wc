@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html, customElement, property, css } from 'lit-element';
 import getApplicationsList from './apis/applications-list.api';
 import { lazyLoading } from './helpers/lazy-loader';
 import store from './core/store';
@@ -65,8 +65,16 @@ export class CreditApp extends LitElement {
     `
   }
 
-  // Clean shadow dom
-  createRenderRoot() {
-    return this;
-  }
+  static styles = css`
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .container .form label {
+      display: block;
+      margin: 20px 0;
+    }
+  `;
 }

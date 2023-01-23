@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property } from 'lit-element'
+import { LitElement, html, customElement, property, css } from 'lit-element'
 import { loadApplications } from '../core/actions';
 import store from '../core/store';
 import './../components/modal';
@@ -57,8 +57,35 @@ export class ApplicationsList extends LitElement {
     `
   }
 
-  // Clean shadow dom
-  createRenderRoot() {
-    return this;
-  }
+  static styles = css`
+    .applications-list li {
+      margin: 12px
+    }
+
+    .credit-btn {
+      border: none;
+      padding: 0;
+      box-shadow: none;
+      background-color: #3f3d96;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .payed {
+      background-color: green;
+      color: white;
+      font-weight: bold;
+      padding: 5px 16px 8px;
+      border-radius: 16px;
+    }
+
+    .no-payed {
+      background-color: orange;
+      color: white;
+      font-weight: bold;
+      padding: 5px 16px 8px;
+      border-radius: 16px;
+    }
+  `;
 }

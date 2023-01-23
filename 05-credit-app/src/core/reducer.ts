@@ -1,6 +1,7 @@
+import { Application } from "../models/applications";
 import { APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
 
-const initialState: any = [];
+const initialState: Application[] = [];
 
 export default function reducer(state = initialState, action: any) {
   switch (action.type) {

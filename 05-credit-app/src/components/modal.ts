@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property } from 'lit-element'
+import { LitElement, html, customElement, property, css } from 'lit-element'
 import { applicationPayed } from '../core/actions';
 import store from '../core/store';
 
@@ -78,7 +78,69 @@ export class CreditModal extends LitElement {
     ` : '';
   }
 
-  createRenderRoot() {
-    return this;
-  }
+  static styles = css`
+    .credit-modal {
+      background-color: rgba(000, 000, 000, .5);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+
+    .credit-modal__container {
+      background-color: #fff;
+      max-width: 992px;
+      width: 100%;
+      min-height: 400px;
+      border-radius: 1rem;
+      padding: 1rem;
+      position: relative;
+    }
+
+    .credit-modal__container__close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      cursor: pointer;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 0;
+    }
+
+    [type="button"] {
+      cursor: pointer;
+    }
+
+    .payed {
+      background-color: seagreen;
+      color: white;
+      font-weight: bold;
+      padding: 5px 16px 8px;
+      border-radius: 16px;
+    }
+
+    .no-payed {
+      background-color: brown;
+      color: white;
+      font-weight: bold;
+      padding: 5px 16px 8px;
+      border-radius: 16px;
+    }
+
+    .credit-btn {
+      border: none;
+      padding: 0;
+      box-shadow: none;
+      background-color: #3f3d96;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  `;
 }

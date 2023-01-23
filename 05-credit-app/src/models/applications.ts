@@ -3,8 +3,10 @@ export interface Application {
   name: string;
   amount: number;
   payed: boolean;
+  detail: ApplicationDetail
 }
 
-export interface CreditApplication {
-  applications: Application[];
+export interface ApplicationDetail {
+  payCapacity: number;
+  paymentMethods: string[];
 }
