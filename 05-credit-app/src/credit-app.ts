@@ -63,9 +63,7 @@ export class CreditApp extends Provider(LitElement) {
   _renderCurrentView() {
     switch (this.currentView) {
       case '/applications':
-        return lazyLoading(import('./pages/applications-list'), html`
-          <applications-list></applications-list>
-        `);
+        return lazyLoading(import('./pages/applications-list'), html`<applications-list></applications-list>`);
 
       default:
         return lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
