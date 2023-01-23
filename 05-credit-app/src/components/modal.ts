@@ -1,34 +1,20 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-import { Requester } from '../helpers/requester';
+import { applicationPayed } from '../core/actions';
+import store from '../core/store';
 
-// @ts-expect-error
 @customElement('credit-modal')
-export class CreditModal extends Requester(LitElement) {
+export class CreditModal extends LitElement {
   @property()
-  userData: any;
+  appDetail: any;
 
   @property()
   show = false;
 
   @property() creditListAPI: any;
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.creditListAPI = this.requestInstance('credit-info');
-    console.log(this.creditListAPI);
-  }
-
-  payCredit(userId: any) {
-    super.connectedCallback();
-    const event = new CustomEvent('credit-data', {
-      bubbles: true,
-      cancelable: true,
-      detail: { userId }
-    });
-
-    this.dispatchEvent(event);
-
-    this.closeModal()
+  payCredit(appId: any) {
+    store.dispatch(applicationPayed(appId));
+    this.closeModal();
   }
 
   closeModal() {
@@ -40,6 +26,7 @@ export class CreditModal extends Requester(LitElement) {
       cancelable: true
     });
 
+    this.show = false;
     this.dispatchEvent(event);
   }
 
@@ -48,26 +35,26 @@ export class CreditModal extends Requester(LitElement) {
       <div class="credit-modal">
         <div class="credit-modal__container">
           <button
-            @click=${this.closeModal}}
+            @click=${this.closeModal}
             class="credit-modal__container__close"
           >
             X
           </button>
           <h1>
-            ${this.userData.name}
+            ${this.appDetail.name}
           </h1>
           <p>
             <strong>Capacidad de pago:</strong>
-            ${this.userData.payCapacity}
+            ${this.appDetail.payCapacity}
           </p>
           <p>
             <strong>Valor a pagar:</strong>
-            ${this.userData.payCapacity}
+            ${this.appDetail.payCapacity}
           </p>
           <p>
             <strong>Métodos de pago:</strong>
             <ul>
-              ${this.userData.paymentMethods.map((method: any) => (
+              ${this.appDetail.paymentMethods.map((method: any) => (
                 html`
                   <li>
                     ${method}
@@ -77,7 +64,7 @@ export class CreditModal extends Requester(LitElement) {
             </ul>
           </p>
           <button
-            @click=${() => this.payCredit(this.userData.id)}
+            @click=${() => this.payCredit(this.appDetail.id)}
             class="credit-btn"
           >
             Pagar

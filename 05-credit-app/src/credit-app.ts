@@ -1,15 +1,13 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import getApplicationsList from './apis/applications-list';
+import getApplicationsList from './apis/applications-list.api';
 import { lazyLoading } from './helpers/lazy-loader';
-import { Provider } from './helpers/provider';
 import store from './core/store';
-import { bugAdded, bugRemoved } from './core/actions';
+import { applicationsAdded } from './core/actions';
 
 import './components/header';
 
-// @ts-expect-error
 @customElement('credit-app')
-export class CreditApp extends Provider(LitElement) {
+export class CreditApp extends LitElement {
   @property() currentView: string = '/';
   @property() appsData: any = [];
 
@@ -20,26 +18,8 @@ export class CreditApp extends Provider(LitElement) {
   connectedCallback() {
     super.connectedCallback();
 
-    new Event('credit-data');
-
-    this.addEventListener('credit-data', (data: any) => {
-      const creditInfo = this.appsData.map((app: any) => {
-        if(app.id == data.detail.userId) {
-          return {
-            ...app,
-            payed: true
-          };
-        } else {
-          return app;
-        }
-      });
-
-      this.provideInstance('credit-info', creditInfo);
-    });
-
     getApplicationsList().then(data => {
-      this.appsData = data;
-      this.provideInstance('credit-info', data);
+      store.dispatch(applicationsAdded(data));
     });
 
     this._onNavigate(window.location.pathname);

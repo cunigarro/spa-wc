@@ -1,23 +1,23 @@
-import { BUG_ADDED, BUG_REMOVED } from "./action-types";
+import { APPLICATIONS_ADDED, APPLICATION_PAYED } from "./action-types";
 
 const initialState: any = [];
 
-let lastId = 0;
-
 export default function reducer(state = initialState, action: any) {
   switch (action.type) {
-    case BUG_ADDED:
+    case APPLICATIONS_ADDED:
       return [
         ...state,
-        {
-          id: ++lastId,
-          description: action.payload.description,
-          resolved: false
-        }
+        ...action.payload.applications
       ];
 
-    case BUG_REMOVED:
-      return state.filter(bug => bug.id !== action.payload.id);
+    case APPLICATION_PAYED:
+      return state.map((app: any) => {
+        if(app.id == action.payload.id) {
+          app.payed = true;
+        }
+
+        return app;
+      });
 
     default:
       return state;

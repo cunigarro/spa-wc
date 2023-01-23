@@ -1,2 +1,2 @@
-export const BUG_ADDED = 'bugAdded';
-export const BUG_REMOVED = 'bugRemoved';
+export const APPLICATIONS_ADDED = 'applicationAdded';
+export const APPLICATION_PAYED = 'applicationPayed';

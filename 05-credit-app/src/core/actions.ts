@@ -1,17 +1,17 @@
-import { BUG_ADDED, BUG_REMOVED } from "./action-types";
+import { APPLICATIONS_ADDED, APPLICATION_PAYED } from "./action-types";
 
-export function bugAdded(description: string) {
+export function applicationsAdded(applications: any) {
   return {
-    type: BUG_ADDED,
+    type: APPLICATIONS_ADDED,
     payload: {
-      description: description
+      applications: applications
     }
   }
 }
 
-export function bugRemoved(id: number) {
+export function applicationPayed(id: number) {
   return {
-    type: BUG_REMOVED,
+    type: APPLICATION_PAYED,
     payload: {
       id: id
     }

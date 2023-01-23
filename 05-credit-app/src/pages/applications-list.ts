@@ -1,27 +1,30 @@
 import { LitElement, html, customElement, property } from 'lit-element'
-import { Requester } from '../helpers/requester';
+import store from '../core/store';
 import './../components/modal';
 
-// @ts-expect-error
 @customElement('applications-list')
-export class ApplicationsList extends Requester(LitElement) {
-  @property() applications: any;
+export class ApplicationsList extends LitElement {
+  @property() applications: any = [];
   @property() showDetailModal = false;
-  @property() userData: any;
+  @property() appDetail: any;
 
   connectedCallback() {
     super.connectedCallback();
-    this.applications = this.requestInstance('credit-info');
+
+    this.applications = store.getState();
+
+    store.subscribe(() => {
+      this.applications = store.getState();
+    });
   }
 
   showDetail(detail: any) {
     this.showDetailModal = true;
-    this.userData = detail;
+    this.appDetail = detail;
   }
 
   closeModal() {
     this.showDetailModal =  false;
-    this.applications = this.requestInstance('credit-info');
   }
 
   render() {
@@ -47,7 +50,7 @@ export class ApplicationsList extends Requester(LitElement) {
           </ul>
         </div>
       `)}
-      <credit-modal .show=${this.showDetailModal} .userData=${this.userData} @close-modal=${this.closeModal}></credit-modal>
+      <credit-modal .show=${this.showDetailModal} .appDetail=${this.appDetail} @close-modal=${this.closeModal}></credit-modal>
     `: `
       Loading...
     `
