@@ -18,7 +18,25 @@ export class CreditApp extends Provider(LitElement) {
   connectedCallback() {
     super.connectedCallback();
 
+    new Event('credit-data');
+
+    this.addEventListener('credit-data', (data: any) => {
+      const creditInfo = this.appsData.map((app: any) => {
+        if(app.id == data.detail.userId) {
+          return {
+            ...app,
+            payed: true
+          };
+        } else {
+          return app;
+        }
+      });
+
+      this.provideInstance('credit-info', creditInfo);
+    });
+
     getApplicationsList().then(data => {
+      this.appsData = data;
       this.provideInstance('credit-info', data);
     });
 

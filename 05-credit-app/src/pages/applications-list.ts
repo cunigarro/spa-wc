@@ -19,6 +19,11 @@ export class ApplicationsList extends Requester(LitElement) {
     this.userData = detail;
   }
 
+  closeModal() {
+    this.showDetailModal =  false;
+    this.applications = this.requestInstance('credit-info');
+  }
+
   render() {
     return this.applications.length ? html`
       ${this.applications.map((v: any) => html`
@@ -42,7 +47,7 @@ export class ApplicationsList extends Requester(LitElement) {
           </ul>
         </div>
       `)}
-      <credit-modal .show=${this.showDetailModal} .userData=${this.userData} @close-modal=${() => { this.showDetailModal =  false; }}></credit-modal>
+      <credit-modal .show=${this.showDetailModal} .userData=${this.userData} @close-modal=${this.closeModal}></credit-modal>
     `: `
       Loading...
     `
