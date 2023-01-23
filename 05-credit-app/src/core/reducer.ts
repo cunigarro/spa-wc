@@ -1,5 +1,5 @@
 import { Application } from "../models/applications";
-import { APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
+import { ADD_APPLICATION, APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
 
 const initialState: Application[] = [];
 
@@ -22,6 +22,12 @@ export default function reducer(state = initialState, action: any) {
 
         return app;
       });
+
+    case ADD_APPLICATION:
+      return [
+        ...state,
+        action.payload.application
+      ];
 
     default:
       return state;

@@ -1,4 +1,5 @@
-import { APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
+import { Application } from "../models/applications";
+import { ADD_APPLICATION, APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
 
 export function loadApplications() {
   return {
@@ -6,7 +7,7 @@ export function loadApplications() {
   }
 }
 
-export function applicationsAdded(applications: any) {
+export function applicationsAdded(applications: Application[]) {
   return {
     type: APPLICATIONS_ADDED,
     payload: {
@@ -20,6 +21,15 @@ export function applicationPayed(id: number) {
     type: APPLICATION_PAYED,
     payload: {
       id: id
+    }
+  }
+}
+
+export function addApplication(application: Application) {
+  return {
+    type: ADD_APPLICATION,
+    payload: {
+      application: application
     }
   }
 }

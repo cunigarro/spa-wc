@@ -20,7 +20,10 @@ export class DoApplications extends LitElement {
           <input amount="name" required />
         </label>
 
-        <button class="credit-btn" type="submit">
+        <button
+          class="credit-btn"
+          type="submit"
+        >
           Apply
         </button>
       </form>
