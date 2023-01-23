@@ -1,11 +1,22 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import { Requester } from '../helpers/requester';
+
+// @ts-expect-error
 @customElement('credit-modal')
-export class CreditModal extends LitElement {
+export class CreditModal extends Requester(LitElement) {
   @property()
   userData: any;
 
   @property()
   show = false;
+
+  @property() creditListAPI: any;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.creditListAPI = this.requestInstance('credit-info');
+    console.log(this.creditListAPI);
+  }
 
   payCredit(userId: any) {
     super.connectedCallback();

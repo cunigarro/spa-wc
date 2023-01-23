@@ -1,10 +1,13 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import getApplicationsList from './apis/applications-list';
-import './components/header';
 import { lazyLoading } from './helpers/lazy-loader';
+import { Provider } from './helpers/provider';
 
+import './components/header';
+
+// @ts-expect-error
 @customElement('credit-app')
-export class CreditApp extends LitElement {
+export class CreditApp extends Provider(LitElement) {
   @property() currentView: string = '/';
   @property() appsData: any = [];
 
@@ -15,23 +18,8 @@ export class CreditApp extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    new Event('credit-data');
-
-    this.addEventListener('credit-data', (data: any) => {
-      this.appsData = this.appsData.map((app: any) => {
-        if(app.id == data.detail.userId) {
-          return {
-            ...app,
-            payed: true
-          };
-        } else {
-          return app;
-        }
-      });
-    });
-
     getApplicationsList().then(data => {
-      this.appsData = data;
+      this.provideInstance('credit-info', data);
     });
 
     this._onNavigate(window.location.pathname);
@@ -56,12 +44,9 @@ export class CreditApp extends LitElement {
 
   _renderCurrentView() {
     switch (this.currentView) {
-      case '/applications' :
+      case '/applications':
         return lazyLoading(import('./pages/applications-list'), html`
-          <applications-list
-            .applications=${this.appsData}
-          >
-          </applications-list>
+          <applications-list></applications-list>
         `);
 
       default:

@@ -1,11 +1,18 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import { Requester } from '../helpers/requester';
 import './../components/modal';
 
+// @ts-expect-error
 @customElement('applications-list')
-export class ApplicationsList extends LitElement {
-  @property() applications;
+export class ApplicationsList extends Requester(LitElement) {
+  @property() applications: any;
   @property() showDetailModal = false;
   @property() userData: any;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.applications = this.requestInstance('credit-info');
+  }
 
   showDetail(detail: any) {
     this.showDetailModal = true;
