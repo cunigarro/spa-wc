@@ -2,6 +2,8 @@ import { LitElement, html, customElement, property } from 'lit-element';
 import getApplicationsList from './apis/applications-list';
 import { lazyLoading } from './helpers/lazy-loader';
 import { Provider } from './helpers/provider';
+import store from './core/store';
+import { bugAdded, bugRemoved } from './core/actions';
 
 import './components/header';
 
