@@ -1,22 +1,12 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 import getApplicationsList from './apis/applications-list';
-import { directive } from 'lit-html';
 import './components/header';
+import { lazyLoading } from './helpers/lazy-loader';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
   @property() currentView: string = '/';
   @property() appsData: any = [];
-  _resolved = new WeakSet();
-
-  lazyLoading = directive((importPromise: any, template: any) => {
-    return (part: any) => {
-      if(!this._resolved.has(part)) {
-        importPromise.then(() => this._resolved.add(part));
-      }
-      part.setValue(template);
-    }
-  });
 
   constructor() {
     super();
@@ -67,7 +57,7 @@ export class CreditApp extends LitElement {
   _renderCurrentView() {
     switch (this.currentView) {
       case '/applications' :
-        return this.lazyLoading(import('./pages/applications-list'), html`
+        return lazyLoading(import('./pages/applications-list'), html`
           <applications-list
             .applications=${this.appsData}
           >
@@ -75,7 +65,7 @@ export class CreditApp extends LitElement {
         `);
 
       default:
-        return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
+        return lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
     }
   }
 

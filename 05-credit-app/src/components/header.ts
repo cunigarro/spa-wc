@@ -26,6 +26,7 @@ export class Header extends LitElement {
 
     header .logo {
       font-weight: bold;
+      cursor: pointer;
     }
 
     header .menu {
