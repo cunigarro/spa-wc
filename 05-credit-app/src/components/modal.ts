@@ -117,22 +117,6 @@ export class CreditModal extends LitElement {
       cursor: pointer;
     }
 
-    .payed {
-      background-color: seagreen;
-      color: white;
-      font-weight: bold;
-      padding: 5px 16px 8px;
-      border-radius: 16px;
-    }
-
-    .no-payed {
-      background-color: brown;
-      color: white;
-      font-weight: bold;
-      padding: 5px 16px 8px;
-      border-radius: 16px;
-    }
-
     .credit-btn {
       border: none;
       padding: 0;
