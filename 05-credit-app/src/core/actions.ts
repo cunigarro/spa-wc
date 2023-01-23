@@ -1,4 +1,10 @@
-import { APPLICATIONS_ADDED, APPLICATION_PAYED } from "./action-types";
+import { APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
+
+export function loadApplications() {
+  return {
+    type: LOAD_APPLICATIONS
+  }
+}
 
 export function applicationsAdded(applications: any) {
   return {

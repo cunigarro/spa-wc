@@ -1,9 +1,12 @@
-import { APPLICATIONS_ADDED, APPLICATION_PAYED } from "./action-types";
+import { APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
 
 const initialState: any = [];
 
 export default function reducer(state = initialState, action: any) {
   switch (action.type) {
+    case LOAD_APPLICATIONS:
+      return state;
+
     case APPLICATIONS_ADDED:
       return [
         ...state,

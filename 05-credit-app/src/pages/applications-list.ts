@@ -1,4 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element'
+import { loadApplications } from '../core/actions';
 import store from '../core/store';
 import './../components/modal';
 
@@ -11,11 +12,11 @@ export class ApplicationsList extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    this.applications = store.getState();
-
     store.subscribe(() => {
       this.applications = store.getState();
     });
+
+    store.dispatch(loadApplications());
   }
 
   showDetail(detail: any) {
