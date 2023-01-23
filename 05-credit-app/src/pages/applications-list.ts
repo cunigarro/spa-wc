@@ -44,7 +44,7 @@ export class ApplicationsList extends LitElement {
             </li>
             <li>
               <strong>Detalle:</strong>
-              <button class="credit-btn" @click=${() => this.showDetail({ ...v.detail, name: v.name, id: v.id})}>
+              <button class="credit-btn" @click=${() => this.showDetail({ ...v.detail, name: v.name, id: v.id, amount: v.amount})}>
                 Ver detalle
               </button>
             </li>

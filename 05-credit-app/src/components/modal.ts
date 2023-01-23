@@ -44,12 +44,16 @@ export class CreditModal extends LitElement {
             ${this.appDetail.name}
           </h1>
           <p>
+            <strong>Cantidad solicitada:</strong>
+            ${this.appDetail.amount}
+          </p>
+          <p>
             <strong>Capacidad de pago:</strong>
             ${this.appDetail.payCapacity}
           </p>
           <p>
             <strong>Valor a pagar:</strong>
-            ${this.appDetail.payCapacity}
+            ${this.appDetail.amountToPay}
           </p>
           <p>
             <strong>Métodos de pago:</strong>
