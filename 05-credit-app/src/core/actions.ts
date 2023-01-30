@@ -1,4 +1,4 @@
-import { Application } from "../models/applications";
+import { Application } from "../models/application";
 import { ADD_APPLICATION, APPLICATIONS_ADDED, APPLICATION_PAYED, LOAD_APPLICATIONS } from "./action-types";
 
 export function loadApplications() {

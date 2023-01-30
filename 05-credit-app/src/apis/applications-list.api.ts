@@ -1,4 +1,6 @@
-export default function getApplicationsList() {
+import { Application } from "../models/application";
+
+export default function getApplicationsList(): Promise<Application[]> {
   return new Promise((res, rej) => {
     const applications = [
       {

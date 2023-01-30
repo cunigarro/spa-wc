@@ -5,6 +5,7 @@ import store from './core/store';
 import { applicationsAdded } from './core/actions';
 
 import './components/header';
+import { Application } from './models/application';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
@@ -18,7 +19,7 @@ export class CreditApp extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    getApplicationsList().then(data => {
+    getApplicationsList().then((data: Application[]) => {
       store.dispatch(applicationsAdded(data));
     });
 
