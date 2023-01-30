@@ -1,23 +1,20 @@
 import { LitElement, html, customElement, property, css } from 'lit-element'
+import { applicationPayed } from '../core/actions';
+import store from '../core/store';
+
 @customElement('credit-modal')
 export class CreditModal extends LitElement {
   @property()
-  userData: any;
+  appDetail: any;
 
   @property()
   show = false;
 
-  payCredit(userId: any) {
-    super.connectedCallback();
-    const event = new CustomEvent('credit-data', {
-      bubbles: true,
-      cancelable: true,
-      detail: { userId }
-    });
+  @property() creditListAPI: any;
 
-    this.dispatchEvent(event);
-
-    this.closeModal()
+  payCredit(appId: any) {
+    store.dispatch(applicationPayed(appId));
+    this.closeModal();
   }
 
   closeModal() {
@@ -29,6 +26,7 @@ export class CreditModal extends LitElement {
       cancelable: true
     });
 
+    this.show = false;
     this.dispatchEvent(event);
   }
 
@@ -37,26 +35,30 @@ export class CreditModal extends LitElement {
       <div class="credit-modal">
         <div class="credit-modal__container">
           <button
-            @click=${this.closeModal}}
+            @click=${this.closeModal}
             class="credit-modal__container__close"
           >
             X
           </button>
           <h1>
-            ${this.userData.name}
+            ${this.appDetail.name}
           </h1>
           <p>
+            <strong>Cantidad solicitada:</strong>
+            ${this.appDetail.amount}
+          </p>
+          <p>
             <strong>Capacidad de pago:</strong>
-            ${this.userData.payCapacity}
+            ${this.appDetail.payCapacity}
           </p>
           <p>
             <strong>Valor a pagar:</strong>
-            ${this.userData.payCapacity}
+            ${this.appDetail.amountToPay}
           </p>
           <p>
             <strong>Métodos de pago:</strong>
             <ul>
-              ${this.userData.paymentMethods.map((method: any) => (
+              ${this.appDetail.paymentMethods.map((method: any) => (
                 html`
                   <li>
                     ${method}
@@ -66,7 +68,7 @@ export class CreditModal extends LitElement {
             </ul>
           </p>
           <button
-            @click=${() => this.payCredit(this.userData.id)}
+            @click=${() => this.payCredit(this.appDetail.id)}
             class="credit-btn"
           >
             Pagar
@@ -77,16 +79,6 @@ export class CreditModal extends LitElement {
   }
 
   static styles = css`
-    .credit-btn {
-      border: none;
-      padding: 0;
-      box-shadow: none;
-      background-color: #3f3d96;
-      color: #fff;
-      padding: 10px 20px;
-      cursor: pointer;
-    }
-
     .credit-modal {
       background-color: rgba(000, 000, 000, .5);
       position: fixed;
@@ -119,6 +111,20 @@ export class CreditModal extends LitElement {
       padding: 1rem;
       font-size: 1rem;
       border: 0;
+    }
+
+    [type="button"] {
+      cursor: pointer;
+    }
+
+    .credit-btn {
+      border: none;
+      padding: 0;
+      box-shadow: none;
+      background-color: #3f3d96;
+      color: #fff;
+      padding: 10px 20px;
+      cursor: pointer;
     }
   `;
 }

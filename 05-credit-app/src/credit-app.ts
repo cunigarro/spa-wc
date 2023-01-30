@@ -1,22 +1,16 @@
-import { LitElement, html, customElement, property } from 'lit-element';
-import getApplicationsList from './apis/applications-list';
-import { directive } from 'lit-html';
+import { LitElement, html, customElement, property, css } from 'lit-element';
+import getApplicationsList from './apis/applications-list.api';
+import { lazyLoading } from './helpers/lazy-loader';
+import store from './core/store';
+import { applicationsAdded } from './core/actions';
+
 import './components/header';
+import { Application } from './models/application';
 
 @customElement('credit-app')
 export class CreditApp extends LitElement {
   @property() currentView: string = '/';
   @property() appsData: any = [];
-  _resolved = new WeakSet();
-
-  lazyLoading = directive((importPromise: any, template: any) => {
-    return (part: any) => {
-      if(!this._resolved.has(part)) {
-        importPromise.then(() => this._resolved.add(part));
-      }
-      part.setValue(template);
-    }
-  });
 
   constructor() {
     super();
@@ -25,23 +19,8 @@ export class CreditApp extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
-    new Event('credit-data');
-
-    this.addEventListener('credit-data', (data: any) => {
-      this.appsData = this.appsData.map((app: any) => {
-        if(app.id == data.detail.userId) {
-          return {
-            ...app,
-            payed: true
-          };
-        } else {
-          return app;
-        }
-      });
-    });
-
-    getApplicationsList().then(data => {
-      this.appsData = data;
+    getApplicationsList().then((data: Application[]) => {
+      store.dispatch(applicationsAdded(data));
     });
 
     this._onNavigate(window.location.pathname);
@@ -66,16 +45,11 @@ export class CreditApp extends LitElement {
 
   _renderCurrentView() {
     switch (this.currentView) {
-      case '/applications' :
-        return this.lazyLoading(import('./pages/applications-list'), html`
-          <applications-list
-            .applications=${this.appsData}
-          >
-          </applications-list>
-        `);
+      case '/applications':
+        return lazyLoading(import('./pages/applications-list'), html`<applications-list></applications-list>`);
 
       default:
-        return this.lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
+        return lazyLoading(import('./pages/do-applications'), html`<do-applications></do-applications>`);
     }
   }
 
@@ -92,8 +66,16 @@ export class CreditApp extends LitElement {
     `
   }
 
-  // Clean shadow dom
-  createRenderRoot() {
-    return this;
-  }
+  static styles = css`
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+    }
+
+    .container .form label {
+      display: block;
+      margin: 20px 0;
+    }
+  `;
 }
